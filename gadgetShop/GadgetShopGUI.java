@@ -188,8 +188,6 @@ public class GadgetShopGUI {
             JOptionPane.showMessageDialog(frame, "Error: Invalid input format. Please enter a valid number for display number and duration.", "Input Error", JOptionPane.ERROR_MESSAGE);
         } catch (ClassCastException ex) {
             JOptionPane.showMessageDialog(frame, "Error: The selected gadget is not a mobile.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalStateException ex) {
-            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage(), "Operation Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -208,8 +206,6 @@ public class GadgetShopGUI {
             JOptionPane.showMessageDialog(frame, "Error: Invalid input format. Please enter a valid number for display number and download size.", "Input Error", JOptionPane.ERROR_MESSAGE);
         } catch (ClassCastException ex) {
             JOptionPane.showMessageDialog(frame, "Error: The selected gadget is not an MP3 player.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalStateException ex) {
-            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage(), "Operation Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
