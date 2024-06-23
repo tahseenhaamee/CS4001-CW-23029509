@@ -8,8 +8,9 @@ public class GadgetShopGUI {
 
     private ArrayList<Gadget> gadgets;
     private JFrame frame;
-    private JTextField modelField, priceField, weightField, sizeField, creditField,
-    memoryField, displayNumberField, phoneNumberField, durationField, downloadSizeField;
+    private JTextField modelField, priceField, weightField, sizeField,
+    creditField, memoryField, displayNumberField, phoneNumberField, durationField, 
+    downloadSizeField, addCreditField, deleteMusicSizeField;
 
     private JTextArea displayArea;
 
@@ -35,27 +36,33 @@ public class GadgetShopGUI {
         phoneNumberField = new JTextField(20);
         durationField = new JTextField(20);
         downloadSizeField = new JTextField(20);
+        addCreditField = new JTextField(20);
+        deleteMusicSizeField = new JTextField(20);
 
-        inputPanel.add(new JLabel("Model:"));
+        inputPanel.add(new JLabel(" Model:"));
         inputPanel.add(modelField);
-        inputPanel.add(new JLabel("Price (£):"));
+        inputPanel.add(new JLabel(" Price (£):"));
         inputPanel.add(priceField);
-        inputPanel.add(new JLabel("Weight (g):"));
+        inputPanel.add(new JLabel(" Weight (g):"));
         inputPanel.add(weightField);
-        inputPanel.add(new JLabel("Size:"));
+        inputPanel.add(new JLabel(" Size:"));
         inputPanel.add(sizeField);
-        inputPanel.add(new JLabel("Initial Credit (min):"));
+        inputPanel.add(new JLabel(" Initial Credit (min):"));
         inputPanel.add(creditField);
-        inputPanel.add(new JLabel("Initial Memory (MB):"));
+        inputPanel.add(new JLabel(" Initial Memory (MB):"));
         inputPanel.add(memoryField);
-        inputPanel.add(new JLabel("Display Number:"));
+        inputPanel.add(new JLabel(" Display Number:"));
         inputPanel.add(displayNumberField);
-        inputPanel.add(new JLabel("Phone Number:"));
+        inputPanel.add(new JLabel(" Phone Number:"));
         inputPanel.add(phoneNumberField);
-        inputPanel.add(new JLabel("Duration (minutes):"));
+        inputPanel.add(new JLabel(" Duration (minutes):"));
         inputPanel.add(durationField);
-        inputPanel.add(new JLabel("Download Size (MB):"));
+        inputPanel.add(new JLabel(" Download Size (MB):"));
         inputPanel.add(downloadSizeField);
+        inputPanel.add(new JLabel(" Add Credit (min):"));
+        inputPanel.add(addCreditField);
+        inputPanel.add(new JLabel(" Delete Music Size (MB):"));
+        inputPanel.add(deleteMusicSizeField);
 
         JPanel buttonPanel = new JPanel();
         JButton addMobileButton = new JButton("Add Mobile");
@@ -94,6 +101,19 @@ public class GadgetShopGUI {
                 downloadMusic();
             }
         });
+        JButton addCreditButton = new JButton("Add Credit");
+        addCreditButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addCredit();
+            }
+        });
+        JButton deleteMusicButton = new JButton("Delete Music");
+        deleteMusicButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                deleteMusic();
+            }
+        });
+
 
         buttonPanel.add(addMobileButton);
         buttonPanel.add(addMP3Button);
@@ -101,8 +121,10 @@ public class GadgetShopGUI {
         buttonPanel.add(displayAllButton);
         buttonPanel.add(makeCallButton);
         buttonPanel.add(downloadMusicButton);
+        buttonPanel.add(addCreditButton);
+        buttonPanel.add(deleteMusicButton);
 
-        displayArea = new JTextArea(10, 40);
+        displayArea = new JTextArea(20, 40);
         JScrollPane scrollPane = new JScrollPane(displayArea);
         displayArea.setEditable(false);
 
@@ -157,6 +179,8 @@ public class GadgetShopGUI {
         phoneNumberField.setText("");
         durationField.setText("");
         downloadSizeField.setText("");
+        addCreditField.setText("");
+        deleteMusicSizeField.setText("");
         displayArea.setText("");
     }
 
@@ -206,6 +230,39 @@ public class GadgetShopGUI {
             JOptionPane.showMessageDialog(frame, "Error: Invalid input format. Please enter a valid number for display number and download size.", "Input Error", JOptionPane.ERROR_MESSAGE);
         } catch (ClassCastException ex) {
             JOptionPane.showMessageDialog(frame, "Error: The selected gadget is not an MP3 player.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void addCredit() {
+        try {
+            int displayNumber = Integer.parseInt(displayNumberField.getText());
+            if (displayNumber >= 0 && displayNumber < gadgets.size()) {
+                Mobile mobile = (Mobile) gadgets.get(displayNumber);
+                int credit = Integer.parseInt(addCreditField.getText());
+                mobile.addCredit(credit);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid display number.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(frame, "Invalid input format. Please enter a valid number for display number and credit amount.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassCastException ex) {
+            JOptionPane.showMessageDialog(frame, "The selected gadget is not a mobile.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deleteMusic() {
+        try {
+            int displayNumber = Integer.parseInt(displayNumberField.getText());
+            if (displayNumber >= 0 && displayNumber < gadgets.size()) {
+                MP3player mp3 = (MP3player) gadgets.get(displayNumber);
+                int deleteSize = Integer.parseInt(deleteMusicSizeField.getText());
+                mp3.deleteMusic(deleteSize);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid display number.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(frame, "Invalid input format. Please enter a valid number for display number and delete size.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassCastException ex) {
+            JOptionPane.showMessageDialog(frame, "The selected gadget is not an MP3 player.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

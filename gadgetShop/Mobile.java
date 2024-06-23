@@ -11,6 +11,7 @@ public class Mobile extends Gadget {
     public void addCredit(int credit) {
         if (credit > 0) {
             callCredit += credit;
+            JOptionPane.showMessageDialog(null, "Your credit is now " + callCredit + " for device " + this.getModel(), "Credit Added", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Please enter a positive amount for calling credit.", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
